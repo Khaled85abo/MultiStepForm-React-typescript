@@ -42,25 +42,38 @@ function App() {
     <AccountForm {...data} updateFields={updateFields} />
   ])
 
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
-
+  const handleShowInput = (e: FormEvent) => {
+    e.preventDefault()
+    console.log(inputRef.current?.value)
+  }
   function onSubmit(e: FormEvent) {
     e.preventDefault();
     next()
   }
   return (
-    <AppWrapper >
-      <form onSubmit={onSubmit}>
-        <PageIndicator >
-          {currentStepIndex + 1}/{steps.length}
-        </PageIndicator>
-        {step}
-        <ActionButton >
-          {!isFirstStep && <button type="button" onClick={back}>Back</button>}
-          {<button type="submit" >{isLastStep ? 'Finish' : 'Next'}</button>}
-        </ActionButton>
-      </form>
-    </AppWrapper>
+    <>
+      <div>
+        <form onSubmit={handleShowInput}>
+
+          <input type="text" ref={inputRef} />
+          <button >show input</button>
+        </form>
+      </div>
+      <AppWrapper >
+        <form onSubmit={onSubmit}>
+          <PageIndicator >
+            {currentStepIndex + 1}/{steps.length}
+          </PageIndicator>
+          {step}
+          <ActionButton >
+            {!isFirstStep && <button type="button" onClick={back}>Back</button>}
+            {<button type="submit" >{isLastStep ? 'Finish' : 'Next'}</button>}
+          </ActionButton>
+        </form>
+      </AppWrapper>
+    </>
   )
 }
 
